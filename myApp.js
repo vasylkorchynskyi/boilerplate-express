@@ -7,29 +7,27 @@ var app = express();
 
 // --> 11)  Mount the body-parser middleware  here
 
-/** 3) Serve an HTML file */
+
+app.use(express.static(__dirname + "/public"));
+
+app.use(function middleware(req, res, next) {
+    const message = `${req.method} ${req.path} - ${req.ip}`
+    console.log(message);
+    next();
+})
+/** Serve an HTML file */
 app.get("/", function(req, res) {
     res.sendFile(__dirname + "/views/index.html");
 })
-/** 4) Serve static assets  */
-app.use(express.static(__dirname + "/public"));
 
-/** 5) serve JSON on a specific route */
+/** serve JSON on a specific route */
 app.get("/json", function(req, res) {
-    console.log(process.env.MESSAGE_STYLE);
-
     if(process.env.MESSAGE_STYLE === "uppercase") {
         res.json({"message": "Hello json".toUpperCase()});
     } else {
         res.json({"message": "Hello json"});
     }
 });
-
-/** 6) Use the .env file to configure the app */
- 
- 
-/** 7) Root-level Middleware - A logger */
-//  place it before all the routes !
 
 
 /** 8) Chaining middleware. A Time server */
