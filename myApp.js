@@ -16,13 +16,6 @@ app.use(function middleware(req, res, next) {
     next();
 })
 
-app.get("/now", function(req, res, next) {
-    req.time = new Date().toString();
-    next();
-}, function (req, res) {
-    res.json({"time": req.time});
-});
-
 /** Serve an HTML file */
 app.get("/", function(req, res) {
     res.sendFile(__dirname + "/views/index.html");
@@ -37,6 +30,18 @@ app.get("/json", function(req, res) {
     }
 });
 
+/** time server  */
+app.get("/now", function(req, res, next) {
+    req.time = new Date().toString();
+    next();
+}, function (req, res) {
+    res.json({"time": req.time});
+});
+
+/** route params  */
+app.get("/:word/echo", function(req, res){
+    res.json({ "echo": req.params.word })
+})
 
 /** 9)  Get input from client - Route parameters */
 
