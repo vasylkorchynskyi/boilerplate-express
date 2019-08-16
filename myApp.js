@@ -15,6 +15,14 @@ app.use(function middleware(req, res, next) {
     console.log(message);
     next();
 })
+
+app.get("/now", function(req, res, next) {
+    req.time = new Date().toString();
+    next();
+}, function (req, res) {
+    res.send(req.time);
+});
+
 /** Serve an HTML file */
 app.get("/", function(req, res) {
     res.sendFile(__dirname + "/views/index.html");
@@ -27,13 +35,6 @@ app.get("/json", function(req, res) {
     } else {
         res.json({"message": "Hello json"});
     }
-});
-
-app.get("/now", function middleware(req, res, next) {
-    req.time = new Date().toString();
-    next();
-}, function (req, res) {
-    res.send(req.time);
 });
 
 
