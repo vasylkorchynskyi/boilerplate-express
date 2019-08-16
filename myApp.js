@@ -20,7 +20,7 @@ app.get("/now", function(req, res, next) {
     req.time = new Date().toString();
     next();
 }, function (req, res) {
-    res.send(req.time);
+    res.json({"time": req.time});
 });
 
 /** Serve an HTML file */
