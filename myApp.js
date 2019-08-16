@@ -1,5 +1,6 @@
 
 var express = require('express');
+var bodyParser = require('body-parser')
 var app = express();
 
 // --> 7)  Mount the Logger middleware here
@@ -9,6 +10,7 @@ var app = express();
 
 
 app.use(express.static(__dirname + "/public"));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(function middleware(req, res, next) {
     const message = `${req.method} ${req.path} - ${req.ip}`
@@ -41,10 +43,13 @@ app.get("/now", function(req, res, next) {
 /** route params  */
 app.get("/:word/echo", function(req, res){
     res.json({ "echo": req.params.word })
-})
+});
 
-/** 9)  Get input from client - Route parameters */
-
+/** get name */
+app.get("/name", function(req, res) {
+    const name = `${req.query.first} ${req.query.last}`
+    res.json({name})
+});
 
 /** 10) Get input from client - Query parameters */
 // /name?first=<firstname>&last=<lastname>
